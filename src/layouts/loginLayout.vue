@@ -1,0 +1,9 @@
+<template>
+    <div>
+        <v-main>
+            <slot />
+        </v-main>
+    </div>
+</template>
+
+<script setup></script>

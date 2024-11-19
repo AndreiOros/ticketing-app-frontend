@@ -12,15 +12,33 @@ export const userStore = defineStore('user', {
         setUser(user) {
             this.user = user
         },
+        async getUser() {
+            try {
+                backend.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem(
+                    'authToken'
+                )}`
+                const response = await api.getUser()
+                this.user = response.data
+            } catch (error) {
+                console.error(error)
+                throw error
+            }
+        },
         async loginUser(email, password) {
             try {
                 const response = await api.login(email, password)
                 this.user = response.data.user
                 backend.defaults.headers.common['Authorization'] = `Token ${response.data.token}`
+                localStorage.setItem('authToken', response.data.token)
             } catch (error) {
                 console.error(error)
                 throw error
             }
+        },
+        logout() {
+            this.user = null
+            delete backend.defaults.headers.common['Authorization']
+            localStorage.removeItem('authToken')
         }
     }
 })

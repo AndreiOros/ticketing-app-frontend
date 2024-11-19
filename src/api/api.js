@@ -1,19 +1,28 @@
 import { backend } from './axios.js'
 
 const user = {
-    login(email, password) {
-        return backend.post('/users/login/', { email, password })
+    async login(email, password) {
+        return await backend.post('/users/login/', { email, password })
+    },
+    async getUser() {
+        return await backend.get('/users/users/')
     }
 }
 const boards = {
-    getBoards() {
-        return backend.get('/boards/boards/')
+    async getBoards() {
+        return await backend.get('/boards/boards/')
     },
-    createBoard(title) {
-        return backend.post('/boards/', { title })
+    async getBoard(id) {
+        return await backend.get(`/boards/boards/${id}/`)
     },
-    deleteBoard(id) {
-        return backend.delete(`/boards/${id}/`)
+    async createBoard(title) {
+        return await backend.post('/boards/', { title })
+    },
+    async updateBoard(id, newData) {
+        return await backend.put(`/boards/boards/${id}/`, newData)
+    },
+    async deleteBoard(id) {
+        return await backend.delete(`/boards/${id}/`)
     }
 }
 
