@@ -14,9 +14,10 @@ export const userStore = defineStore('user', {
         },
         async getUser() {
             try {
-                backend.defaults.headers.common['Authorization'] = `Token ${localStorage.getItem(
-                    'authToken'
-                )}`
+                const token = localStorage.getItem('authToken')
+                if (token) {
+                    backend.defaults.headers.common['Authorization'] = `Token ${token}`
+                }
                 const response = await api.getUser()
                 this.user = response.data
             } catch (error) {

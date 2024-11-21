@@ -2,13 +2,14 @@
     <div>
         <v-navigation-drawer app>
             <v-list>
-                <v-list-item link>Dashboard</v-list-item>
+                <v-list-item link @click="router.push('/dashboard')">Dashboard</v-list-item>
                 <v-list-item link>Settings</v-list-item>
             </v-list>
-            <v-btn @click="logout">Logout</v-btn>
         </v-navigation-drawer>
         <v-app-bar app>
-            <span>Admin Layout Header</span>
+            <span>The Ticketing App</span>
+            <v-spacer />
+            <v-btn @click="logout" icon="mdi-logout"></v-btn>
         </v-app-bar>
         <v-main>
             <slot />

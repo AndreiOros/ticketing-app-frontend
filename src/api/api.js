@@ -15,8 +15,8 @@ const boards = {
     async getBoard(id) {
         return await backend.get(`/boards/boards/${id}/`)
     },
-    async createBoard(title) {
-        return await backend.post('/boards/', { title })
+    async createBoard(boardData) {
+        return await backend.post('/boards/boards/', boardData)
     },
     async updateBoard(id, newData) {
         return await backend.put(`/boards/boards/${id}/`, newData)

@@ -64,6 +64,15 @@ export const boardsStore = defineStore('boards', {
                 console.error(error)
                 throw error
             }
+        },
+        async createBoard(boardData) {
+            try {
+                const response = await api.createBoard(boardData)
+                this.boards.push(response.data)
+            } catch (error) {
+                console.error(error)
+                throw error
+            }
         }
     }
 })
