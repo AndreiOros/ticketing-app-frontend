@@ -19,7 +19,33 @@ export const userStore = defineStore('user', {
                     backend.defaults.headers.common['Authorization'] = `Token ${token}`
                 }
                 const response = await api.getUser()
+                this.user = response.data[0]
+            } catch (error) {
+                console.error(error)
+                throw error
+            }
+        },
+        async updateUser(user) {
+            try {
+                const response = await api.updateUser(user)
                 this.user = response.data
+            } catch (error) {
+                console.error(error)
+                throw error
+            }
+        },
+        async updatePassword(oldPassword, newPassword) {
+            try {
+                await api.updatePassword(this.user.id, oldPassword, newPassword)
+            } catch (error) {
+                console.error(error)
+                throw error
+            }
+        },
+        async deleteUser(id) {
+            try {
+                await api.deleteUser(id)
+                this.logout()
             } catch (error) {
                 console.error(error)
                 throw error

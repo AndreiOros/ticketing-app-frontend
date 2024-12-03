@@ -11,10 +11,11 @@
                 <v-row>
                     {{ list.title }}
                 </v-row>
-                <Dragabble
+                <Draggable
                     :list="list"
                     @updateCardPosition="updateCardPosition"
                     @selectCard="selectCard"
+                    @deleteCard="deleteCard"
                 />
                 <v-row> </v-row>
             </v-col>
@@ -43,16 +44,21 @@
             </v-list>
         </v-menu>
 
-        <CardView :isAddCardDialogOpen="isViewCardDialogOpen" :card="selectedCard" />
+        <CardView
+            :isAddCardDialogOpen="isViewCardDialogOpen"
+            :card="selectedCard"
+            @saveCard="saveCard"
+            @closeDialog="isViewCardDialogOpen = false"
+        />
     </v-container>
 </template>
 
 <script setup>
 import { boardsStore } from '@/stores/boards'
-import { computed, onBeforeMount } from 'vue'
+import { computed, onBeforeMount, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import Dragabble from '@/components/board/Draggable.vue'
+import Draggable from '@/components/board/Draggable.vue'
 import AddNewCardDialog from '@/components/board/AddNewCardDialog.vue'
 import AddNewListDialog from '@/components/board/AddNewListDialog.vue'
 import CardView from '@/components/card/CardView.vue'
@@ -138,9 +144,44 @@ const addNewList = async (newListData) => {
     isAddListDialogOpen.value = false
 }
 
+const saveCard = (data) => {
+    const newBoard = { ...store.currentBoard }
+    const listIndex = newBoard.lists.findIndex((l) => l.id === data.card.list)
+    const cardIndex = newBoard.lists[listIndex].cards.findIndex((c) => c.id === data.card.id)
+    newBoard.lists[listIndex].cards[cardIndex] = data.card
+    newBoard.lists[listIndex].cards[cardIndex].comments.push(data.comment)
+    store.updateBoardWithNewCard(newBoard)
+    if (!data.comment) {
+        isViewCardDialogOpen.value = false
+    }
+}
+
+const deleteCard = async (list, cardIndex) => {
+    const newBoard = { ...store.currentBoard }
+    const listIndex = newBoard.lists.findIndex((l) => l.id === list.id)
+    newBoard.lists[listIndex].cards.splice(cardIndex, 1)
+    for (let i = 0; i < newBoard.lists[listIndex].cards.length; i++) {
+        newBoard.lists[listIndex].cards[i].position = i
+    }
+    await store.updateBoardWithNewCard(newBoard)
+}
+
 onBeforeMount(async () => {
     await store.getCurrentBoard(route.params.id)
 })
+
+watch(
+    () => store.currentBoard,
+    async (value) => {
+        if (selectCard.value) {
+            const listIndex = value.lists.findIndex((l) => l.id === selectCard.value.list)
+            const cardIndex = value.lists[listIndex].cards.findIndex(
+                (c) => c.id === selectCard.value.id
+            )
+            selectedCard.value = value.lists[listIndex].cards[cardIndex]
+        }
+    }
+)
 </script>
 
 <style scoped>

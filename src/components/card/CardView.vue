@@ -12,34 +12,49 @@
                             <CommentCard :comment="item" />
                         </template>
                     </v-virtual-scroll>
-                    <v-text-field v-model="newComment" label="Add a comment">
+                    <v-text-field v-model="newComment.text" label="Add a comment">
                         <template v-slot:append>
-                            <v-btn v-bind="props" flat icon="mdi-send" />
+                            <v-btn v-bind="props" flat icon="mdi-send" @click="saveComment" />
                         </template>
                     </v-text-field>
                 </v-col>
             </v-row>
             <v-card-actions>
-                <v-btn @click="emit('closeDialog')">Cancel</v-btn>
-                <v-btn @click="emit('saveCard', selectedCard)">Save</v-btn>
+                <v-btn @click="emit('closeDialog')">Close</v-btn>
+                <v-btn @click="emit('saveCard', { card: selectedCard })">Save</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 </template>
 
 <script setup>
+import { userStore } from '@/stores/user'
 import CommentCard from './CommentCard.vue'
 import { ref, watch } from 'vue'
 const props = defineProps({
     isAddCardDialogOpen: Boolean,
     card: Object
 })
+const store = userStore()
 
-const emit = defineEmits('closeDialog', 'saveCard')
+const emit = defineEmits('closeDialog', 'saveCard', 'saveComment')
 
 const isOpened = ref(false)
 const selectedCard = ref(null)
-const newComment = ref('')
+const newComment = ref({
+    text: '',
+    card: null
+})
+
+const saveComment = () => {
+    newComment.value.author = store.user
+    emit('saveCard', { card: selectedCard.value, comment: newComment.value })
+
+    newComment.value = {
+        text: '',
+        card: null
+    }
+}
 
 watch(
     () => props.isAddCardDialogOpen,
@@ -51,6 +66,7 @@ watch(
     () => props.card,
     (value) => {
         selectedCard.value = value
+        newComment.value.card = value.id
     }
 )
 </script>

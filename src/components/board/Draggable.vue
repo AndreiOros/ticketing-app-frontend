@@ -11,18 +11,20 @@
                 <v-card class="ma-4" @mousedown="setCurrentCard(element)">
                     <v-toolbar color="transparent">
                         <template v-slot:append>
-                            <v-btn icon="mdi-dots-vertical" @click="isMenuOpened = true" />
-                            <v-menu v-model="isMenuOpened" offset-y>
-                                <template v-slot:activator="{ on }">
-                                    <v-list-item v-bind="on">
-                                        <v-list-item-title>Menu</v-list-item-title>
-                                    </v-list-item>
+                            <!-- <v-btn icon="mdi-dots-vertical" @click="isMenuOpened = true" /> -->
+                            <v-menu>
+                                <template v-slot:activator="{ props }">
+                                    <v-btn
+                                        icon="mdi-dots-vertical"
+                                        variant="text"
+                                        v-bind="props"
+                                    ></v-btn>
                                 </template>
-                                <v-list>
+                                <v-list class="menu-list">
                                     <v-list-item @click="selectCard(element)">
                                         <v-list-item-title>View</v-list-item-title>
                                     </v-list-item>
-                                    <v-list-item @click="isMenuOpened = false">
+                                    <v-list-item @click="deleteCard(element)">
                                         <v-list-item-title>Delete</v-list-item-title>
                                     </v-list-item>
                                 </v-list>
@@ -50,11 +52,13 @@ const emit = defineEmits({
     },
     selectCard: (card) => {
         return typeof card === 'object'
+    },
+    deleteCard: (card, list) => {
+        return typeof card === 'object' && typeof list === 'object'
     }
 })
 
 const drag = ref(false)
-const isMenuOpened = ref(false)
 const currentCard = ref(null)
 
 const cards = computed({
@@ -75,4 +79,11 @@ const selectCard = (card) => {
 const setCurrentCard = (card) => {
     currentCard.value = card
 }
+
+const deleteCard = (card) => {
+    const cardIndex = cards.value.findIndex((c) => c.title === card.title)
+    emit('deleteCard', props.list, cardIndex)
+}
 </script>
+
+<style scoped></style>

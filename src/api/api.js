@@ -6,6 +6,18 @@ const user = {
     },
     async getUser() {
         return await backend.get('/users/users/')
+    },
+    async updateUser(user) {
+        return await backend.put(`/users/users/${user.id}/`, user)
+    },
+    async deleteUser(id) {
+        return await backend.delete(`/users/users/${id}/`)
+    },
+    updatePassword(id, oldPassword, newPassword) {
+        return backend.post(`/users/change-password/`, {
+            current_password: oldPassword,
+            new_password: newPassword
+        })
     }
 }
 const boards = {

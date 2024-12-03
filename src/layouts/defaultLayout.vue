@@ -3,7 +3,7 @@
         <v-navigation-drawer app>
             <v-list>
                 <v-list-item link @click="router.push('/dashboard')">Dashboard</v-list-item>
-                <v-list-item link>Settings</v-list-item>
+                <v-list-item link @click="router.push('/profile')">Profile</v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-app-bar app>

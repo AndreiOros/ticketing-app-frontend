@@ -22,5 +22,11 @@ export const routes = [
         name: 'Board',
         component: () => import('../pages/Board.vue'),
         meta: { layout: 'defaultLayout', requiresAuth: true }
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        component: () => import('../pages/Profile.vue'),
+        meta: { layout: 'defaultLayout', requiresAuth: true }
     }
 ]
