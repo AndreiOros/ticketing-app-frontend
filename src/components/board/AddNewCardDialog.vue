@@ -1,13 +1,17 @@
 <template>
     <div>
         <v-dialog v-model="isOpened" max-width="500px">
-            <v-card>
+            <v-card class="dialog-card">
                 <v-card-title>Add new card</v-card-title>
                 <v-card-text>
-                    <v-text-field v-model="newCard.title" label="Card title" />
+                    <v-text-field v-model="newCard.title" label="Card title" bg-color="#9bc1bc" />
                 </v-card-text>
                 <v-card-text>
-                    <v-text-field v-model="newCard.description" label="Card description" />
+                    <v-text-field
+                        v-model="newCard.description"
+                        label="Card description"
+                        bg-color="#9bc1bc"
+                    />
                 </v-card-text>
                 <v-select
                     v-model="newCard.list"
@@ -15,6 +19,9 @@
                     item-text="title"
                     item-value="id"
                     label="Select list"
+                    bg-color="#9bc1bc"
+                    class="mx-auto mt-3"
+                    width="90%"
                 />
                 <v-card-actions>
                     <v-btn @click="emit('closeDialog')">Cancel</v-btn>
@@ -48,3 +55,9 @@ watch(
     }
 )
 </script>
+
+<style scoped>
+.dialog-card {
+    background-color: #e6ebe0;
+}
+</style>

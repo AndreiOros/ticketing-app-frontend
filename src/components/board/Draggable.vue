@@ -6,12 +6,12 @@
             @start="drag = true"
             @end="drag = false"
             item-key="title"
+            class="drag-area"
         >
             <template #item="{ element }">
-                <v-card class="ma-4" @mousedown="setCurrentCard(element)">
+                <v-card class="task-card" @mousedown="setCurrentCard(element)">
                     <v-toolbar color="transparent">
                         <template v-slot:append>
-                            <!-- <v-btn icon="mdi-dots-vertical" @click="isMenuOpened = true" /> -->
                             <v-menu>
                                 <template v-slot:activator="{ props }">
                                     <v-btn
@@ -86,4 +86,16 @@ const deleteCard = (card) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.task-card {
+    margin: 15px;
+    background-color: #9bc1bc;
+    color: #e6ebe0;
+    width: 250px !important;
+}
+.drag-area {
+    padding: 10px;
+    margin-top: 10px;
+    width: 260px !important;
+}
+</style>

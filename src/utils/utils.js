@@ -10,7 +10,7 @@ export function createDefaultBoard(boardData) {
             cards: []
         },
         {
-            title: 'In Progress',
+            title: 'Doing',
             cards: []
         },
         {

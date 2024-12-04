@@ -1,15 +1,17 @@
 <template>
-    <v-container>
+    <v-container fluid>
         <v-row>
-            {{ board.name }}
-        </v-row>
-        <v-row>
-            {{ board.description }}
+            <v-card class="mt-3 mb-3 mr-11" style="width: 100%">
+                <v-card-title>{{ board.name }}</v-card-title>
+                <v-card-text>{{ board.description }}</v-card-text>
+            </v-card>
         </v-row>
         <v-row>
             <v-col v-for="(list, id) in board.lists" :key="id">
                 <v-row>
-                    {{ list.title }}
+                    <v-card class="cards-list-title">
+                        {{ list.title }}
+                    </v-card>
                 </v-row>
                 <Draggable
                     :list="list"
@@ -17,7 +19,6 @@
                     @selectCard="selectCard"
                     @deleteCard="deleteCard"
                 />
-                <v-row> </v-row>
             </v-col>
         </v-row>
         <AddNewCardDialog
@@ -189,5 +190,26 @@ watch(
     position: fixed;
     bottom: 50px;
     right: 60px;
+}
+.board-name-row {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    background-color: white;
+}
+.board-description-row {
+    font-size: 16px;
+    margin-top: 10px;
+    background-color: white;
+}
+.cards-list-title {
+    margin-top: 20px;
+    background-color: white;
+    width: 100px;
+    margin-left: 110px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: capitalize;
 }
 </style>

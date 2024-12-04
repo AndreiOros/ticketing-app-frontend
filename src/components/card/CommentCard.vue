@@ -31,6 +31,7 @@ const date = computed(() => {
 <style scoped>
 .card {
     margin: 10px;
-    background-color: #9b9999;
+    background-color: #9bc1bc;
+    color: white;
 }
 </style>

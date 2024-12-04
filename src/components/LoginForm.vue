@@ -8,7 +8,8 @@
                         :rules="emailRules"
                         label="E-mail"
                         required
-                    ></v-text-field>
+                        bg-color="#e6ebe0"
+                    />
                 </v-col>
             </v-row>
             <v-row>
@@ -18,12 +19,13 @@
                         label="password"
                         required
                         type="password"
-                    ></v-text-field>
+                        bg-color="#e6ebe0"
+                    />
                 </v-col>
             </v-row>
             <v-row>
                 <v-col cols="12" md="4" class="mx-auto d-flex justify-center">
-                    <v-btn :disabled="!valid" color="primary" @click="login"> Login </v-btn>
+                    <v-btn :disabled="!valid" color="#ed6a5a" @click="login"> Login </v-btn>
                 </v-col>
             </v-row>
         </v-form>
@@ -61,10 +63,12 @@ const login = () => {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 600px; /* Adjust this value to make the card taller */
+    height: 600px;
     width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: #9bc1bc;
+    color: #e6ebe0;
 }
 </style>

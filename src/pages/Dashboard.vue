@@ -5,7 +5,12 @@
                 <BoardCard :board="board" v-for="(board, id) in store.boards" :key="id" />
             </v-col>
         </v-row>
-        <v-fab class="add-button" icon="mdi-plus" @click="isAddBoardDialogOpen = true" />
+        <v-fab
+            class="add-button"
+            icon="mdi-plus"
+            @click="isAddBoardDialogOpen = true"
+            color="#ed6a5a"
+        />
         <AddNewBoardDialog
             :isAddBoardDialogOpen="isAddBoardDialogOpen"
             @addNewBoard="addNewBord"

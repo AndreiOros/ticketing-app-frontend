@@ -6,14 +6,16 @@
             </v-card-title>
         </v-card-item>
 
-        <v-card-text>
+        <v-card-text class="description-area">
             {{ board.description }}
         </v-card-text>
 
         <v-spacer />
 
         <v-card-actions>
-            <v-btn class="position-absolute bottom-0 right-0" @click="goToBoard">Go to board</v-btn>
+            <v-btn class="position-absolute bottom-0 right-0" @click="goToBoard" color="#ed6a5a"
+                >Go to board</v-btn
+            >
         </v-card-actions>
     </v-card>
 </template>
@@ -41,5 +43,11 @@ const goToBoard = async () => {
     margin: 10px;
     width: 300px;
     height: 200px;
+    background-color: #9bc1bc;
+    color: #e6ebe0;
+}
+.description-area {
+    height: 100px;
+    overflow: hidden;
 }
 </style>

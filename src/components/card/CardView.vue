@@ -1,27 +1,35 @@
 <template>
     <v-dialog v-model="isOpened" max-width="500px">
-        <v-card>
+        <v-card class="view-card-card">
             <v-card-title>{{ selectedCard.title }}</v-card-title>
-            <v-row>
+            <v-row class="ma-4">
                 <v-col>
                     <v-textarea v-model="selectedCard.description" label="Card description" />
                 </v-col>
                 <v-col>
-                    <v-virtual-scroll :height="300" :items="selectedCard.comments">
+                    <v-virtual-scroll class="scroller" :height="300" :items="selectedCard.comments">
                         <template v-slot:default="{ item }">
                             <CommentCard :comment="item" />
                         </template>
                     </v-virtual-scroll>
                     <v-text-field v-model="newComment.text" label="Add a comment">
                         <template v-slot:append>
-                            <v-btn v-bind="props" flat icon="mdi-send" @click="saveComment" />
+                            <v-btn
+                                class="save-comment-button"
+                                v-bind="props"
+                                flat
+                                icon="mdi-send"
+                                @click="saveComment"
+                            />
                         </template>
                     </v-text-field>
                 </v-col>
             </v-row>
             <v-card-actions>
-                <v-btn @click="emit('closeDialog')">Close</v-btn>
-                <v-btn @click="emit('saveCard', { card: selectedCard })">Save</v-btn>
+                <v-btn class="action-buttons" @click="emit('closeDialog')">Close</v-btn>
+                <v-btn class="action-buttons" @click="emit('saveCard', { card: selectedCard })">
+                    Save
+                </v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -70,3 +78,25 @@ watch(
     }
 )
 </script>
+
+<style scoped>
+.view-card-card {
+    background-color: #e6ebe0;
+}
+.save-comment-button {
+    color: #e6ebe0;
+    background-color: #ed6a5a;
+}
+.action-buttons {
+    color: #ed6a5a;
+}
+.scroller {
+    background-color: white;
+    border: 1px solid #9bc1bc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    overflow-y: auto;
+    height: 300px;
+}
+</style>
